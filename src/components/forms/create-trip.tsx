@@ -178,17 +178,20 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
           </div>
 
           {fields.map((field, index) => (
-            <div key={field.id} className="gap-y-4 p-4 bg-[#f3f3f3] rounded-lg">
-              {/* <div className="flex justify-between items-center">
+            <div
+              key={field.id}
+              className="gap-y-4 relative p-4 bg-[#f3f3f3] rounded-lg"
+            >
+              <div className="absolute bottom-2 left-2 flex justify-between items-center">
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
                   onClick={() => remove(index)}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="size-4 text-destructive" />
                 </Button>
-              </div> */}
+              </div>
 
               <div className="grid grid-cols-4 gap-x-4">
                 <div className="col-span-1">
