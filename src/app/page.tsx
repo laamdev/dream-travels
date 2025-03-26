@@ -1,44 +1,35 @@
-import { Travel } from "@/types";
+import { Trip } from "@/types/index";
 
-import { Input } from "@/components/ui/input";
 import { TripCard } from "@/components/trip-card";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Header } from "@/components/home/header";
+import { EmptyState } from "@/components/home/empty-state";
 
-export default async function Home() {
-  const travelsData = await fetch(process.env.NEXT_PUBLIC_API_URL as string);
-  const travels = await travelsData.json();
+import { getAllTrips } from "@/lib/db/queries";
+
+interface SearchParams {
+  status?: string;
+  search?: string;
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const { status, search } = await searchParams;
+
+  const trips: Trip[] = await getAllTrips({ status, search });
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-[32px]">The places you dream of</h1>
-        <p className="text-xl">Let’s live new adventures </p>
+      <Header />
 
-        <div className="flex justify-center items-center w-96">
-          <Input placeholder="Search trips" className="mt-8" />
-        </div>
-
-        <div className="mt-16">
-          <Tabs defaultValue="all">
-            <TabsList>
-              <TabsTrigger value="all" className="rounded-l-full">
-                All
-              </TabsTrigger>
-              <TabsTrigger value="upcoming" className="border-x">
-                Upcoming
-              </TabsTrigger>
-              <TabsTrigger value="completed" className="rounded-r-full">
-                Completed
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-      </div>
-
-      <div className="flex mt-12 flex-col gap-4">
-        {travels.map((travel: Travel) => (
-          <TripCard key={travel.id} travel={travel} />
-        ))}
+      <div className="flex mt-6 flex-col gap-6">
+        {trips.length === 0 ? (
+          <EmptyState />
+        ) : (
+          trips.map((trip) => <TripCard key={trip.id} trip={trip} />)
+        )}
       </div>
     </div>
   );

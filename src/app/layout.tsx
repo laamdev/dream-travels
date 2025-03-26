@@ -5,6 +5,9 @@ import localFont from "next/font/local";
 
 import { cn } from "@/lib/utils";
 
+import { Navbar } from "@/components/navigation/navbar";
+import { Toaster } from "@/components/ui/sonner";
+
 export const metadata: Metadata = {
   title: "Dream Travels",
   description: "Dream Travels",
@@ -73,14 +76,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          "mx-auto font-sans max-w-screen-xl px-12",
-          oakes.variable
-        )}
-      >
-        {children}
+    <html lang="en" className="container" suppressHydrationWarning>
+      <body className={cn(oakes.variable)}>
+        <Navbar />
+        <main>
+          <Toaster />
+          {children}
+        </main>
       </body>
     </html>
   );
