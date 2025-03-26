@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import { useState } from "react";
 
 import {
   Dialog,
@@ -6,23 +8,29 @@ import {
   DialogContent,
   DialogHeader,
   DialogTrigger,
-  DialogDescription,
 } from "@/components/ui/dialog";
+import { EditTripForm } from "@/components/forms/edit-trip";
+import { Trip } from "@/types/index";
 
-export const EditTripDialog = ({}) => {
+interface EditTripDialogProps {
+  trip: Trip;
+}
+
+export const EditTripDialog = ({ trip }: EditTripDialogProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
-      <DialogTrigger className="w-fit cursor-pointer text-destructive underline underline-offset-2">
-        Edit
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger className="w-fit cursor-pointer underline underline-offset-2">
+        Edit trip
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>Edit trip</DialogTitle>
         </DialogHeader>
+        <div className="mt-6">
+          <EditTripForm trip={trip} onSuccess={() => setOpen(false)} />
+        </div>
       </DialogContent>
     </Dialog>
   );

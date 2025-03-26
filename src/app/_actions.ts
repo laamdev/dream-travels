@@ -88,13 +88,42 @@ export const updateTripStatusAction = async (tripId: string) => {
   }
 };
 
-export const updateTripAction = async (trip: Trip) => {
+export const editTripAction = async (trip: Trip) => {
   try {
-    const res = await db.update(trips).set(trip).where(eq(trips.id, trip.id));
-    revalidatePath(`/trip/${trip.id}`);
-    return res;
+    // Update trip details
+    await db
+      .update(trips)
+      .set({
+        title: trip.title,
+        introduction: trip.introduction || "",
+        description: trip.description || "",
+        photo_url:
+          trip.photo_url ||
+          "https://res.cloudinary.com/brother-sailor/image/upload/v1742960930/Dream%20Travels/travel-placeholder.jpg",
+        status: trip.status,
+      })
+      .where(eq(trips.id, trip.id));
+
+    // Delete existing itineraries
+    await db.delete(itineraries).where(eq(itineraries.trip_id, trip.id));
+
+    // Insert new itineraries if they exist
+    if (trip.itineraries && trip.itineraries.length > 0) {
+      await db.insert(itineraries).values(
+        trip.itineraries.map((item) => ({
+          id: item.id || uuidv4(),
+          trip_id: trip.id,
+          day: item.day,
+          location: item.location,
+          description: item.description,
+        }))
+      );
+    }
+
+    revalidatePath("/");
+    return { success: true };
   } catch (error) {
-    console.error("Error updating trip:", error);
-    throw new Error("Failed to update trip");
+    console.error("Error editing trip:", error);
+    throw new Error("Failed to edit trip");
   }
 };

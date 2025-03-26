@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { DeleteTripDialog } from "@/components/dialogs/delete-trip";
 import { TripDetailsDialog } from "@/components/dialogs/trip-details";
+import { EditTripDialog } from "@/components/dialogs/edit-trip";
 
 import { Trip } from "@/types/index";
 
@@ -26,9 +27,7 @@ export const TripCard = ({ trip }: { trip: Trip }) => {
           <div className="flex justify-between mt-auto">
             <TripDetailsDialog trip={trip} />
             <div className="flex gap-4">
-              <button className="w-fit underline underline-offset-2">
-                Edit
-              </button>
+              <EditTripDialog trip={trip} />
               <DeleteTripDialog trip={trip} />
             </div>
           </div>

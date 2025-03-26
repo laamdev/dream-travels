@@ -28,24 +28,31 @@ import {
 } from "@/components/ui/select";
 
 import { createTripformSchema } from "@/schemas";
+import { Trip } from "@/types/index";
+import { editTripAction } from "@/app/_actions";
 
-interface CreateTripFormProps {
+interface EditTripFormProps {
+  trip: Trip;
   onSuccess?: () => void;
 }
 
-export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
+export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof createTripformSchema>>({
     resolver: zodResolver(createTripformSchema),
     defaultValues: {
-      title: "",
-      introduction: "",
-      description: "",
-      photo_url: "",
-      status: "todo",
-      itinerary: [{ day: 1, location: "", description: "" }],
+      title: trip.title,
+      introduction: trip.introduction || "",
+      description: trip.description || "",
+      photo_url: trip.photo_url || "",
+      status: trip.status as "done" | "todo",
+      itinerary: trip.itineraries.map((it) => ({
+        day: it.day,
+        location: it.location,
+        description: it.description,
+      })),
     },
   });
 
@@ -57,26 +64,31 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
   async function onSubmit(values: z.infer<typeof createTripformSchema>) {
     try {
       setIsPending(true);
-      const response = await fetch("/api/create-trip", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(values),
-      });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to submit the form");
-      }
+      const updatedTrip = {
+        ...trip,
+        title: values.title,
+        introduction: values.introduction,
+        description: values.description,
+        photo_url: values.photo_url,
+        status: values.status,
+        itineraries: values.itinerary.map((item, index) => ({
+          id: trip.itineraries[index]?.id || "",
+          trip_id: trip.id,
+          day: item.day,
+          location: item.location,
+          description: item.description,
+        })),
+      };
 
-      form.reset();
-      toast.success("Trip created successfully");
+      await editTripAction(updatedTrip);
+
+      toast.success("Trip updated successfully");
       router.refresh();
       onSuccess?.();
     } catch (error) {
       console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      toast.error("Failed to update the trip. Please try again.");
     } finally {
       setIsPending(false);
     }
@@ -179,7 +191,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
 
           {fields.map((field, index) => (
             <div key={field.id} className="gap-y-4 p-4 bg-[#f3f3f3] rounded-lg">
-              {/* <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center">
                 <Button
                   type="button"
                   variant="ghost"
@@ -188,7 +200,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
-              </div> */}
+              </div>
 
               <div className="grid grid-cols-4 gap-x-4">
                 <div className="col-span-1">
@@ -266,7 +278,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
         </div>
 
         <Button type="submit" className="mt-6" disabled={isPending}>
-          {isPending ? "Creating..." : "Submit"}
+          {isPending ? "Updating..." : "Update Trip"}
         </Button>
       </form>
     </Form>
