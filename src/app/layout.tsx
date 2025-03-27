@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 
 import { Navbar } from "@/components/navigation/navbar";
 import { Toaster } from "@/components/ui/sonner";
-// // import { TripCountdown } from "@/components/trip-countdown";
 
 export const metadata: Metadata = {
   title: "Dream Travels",
@@ -80,8 +79,7 @@ export default function RootLayout({
     <html lang="en" className="container" suppressHydrationWarning>
       <body className={cn(oakes.variable)}>
         <Navbar />
-        {/* <TripCountdown /> */}
-        <main className="mb-12">
+        <main className="mb-4 md:mb-12">
           <Toaster />
           {children}
         </main>

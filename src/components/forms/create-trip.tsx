@@ -6,7 +6,7 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, XIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -172,19 +172,15 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
               key={field.id}
               className="gap-y-4 relative p-4 bg-[#f3f3f3] rounded-lg"
             >
-              <div className="absolute bottom-2 left-2 flex justify-between items-center">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => remove(index)}
-                >
-                  <Trash2 className="size-4 text-destructives" />
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-4 gap-x-4">
-                <div className="col-span-1">
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="absolute top-1 right-1 p-0.5 group cursor-pointer transition-colors duration-300 ease-in-out"
+              >
+                <XIcon className="size-3 text-destructive group-hover:text-destructive/80" />
+              </button>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="md:col-span-1">
                   <FormField
                     control={form.control}
                     name={`itinerary.${index}.day`}
@@ -217,7 +213,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
                   />
                 </div>
 
-                <div className="col-span-3 flex flex-col gap-y-2">
+                <div className="md:col-span-3 flex flex-col gap-y-2">
                   <FormField
                     control={form.control}
                     name={`itinerary.${index}.location`}
@@ -225,7 +221,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
                       <FormItem>
                         <FormControl>
                           <Input
-                            placeholder="e.g., Rome"
+                            placeholder="Location"
                             {...field}
                             value={field.value || ""}
                           />

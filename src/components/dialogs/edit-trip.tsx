@@ -28,7 +28,7 @@ export const EditTripDialog = ({ trip }: EditTripDialogProps) => {
         <DialogHeader>
           <DialogTitle>Edit trip</DialogTitle>
         </DialogHeader>
-        <div className="mt-6">
+        <div className="mt-4">
           <EditTripForm trip={trip} onSuccess={() => setOpen(false)} />
         </div>
       </DialogContent>

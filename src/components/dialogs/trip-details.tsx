@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { Trip } from "@/types";
+import { EmptyState } from "@/components/ui/empty-state";
 
 import {
   Dialog,
@@ -41,34 +42,38 @@ export const TripDetailsDialog = ({ trip }: { trip: Trip }) => {
             <p className="text-base">{trip.description}</p>
           </div>
 
-          <hr className="border-t my-4 border-gray-200" />
+          <hr className="border-t my-4 border-zinc-200" />
 
           <div className="flex flex-col gap-y-6">
             <h2 className="text-2xl">Itinerary</h2>
 
-            <div className="flex flex-col relative">
-              <div className="absolute left-[5px] top-[12px] h-[calc(100%-12px)] w-[2px] bg-black" />
+            {trip.itineraries.length === 0 ? (
+              <EmptyState />
+            ) : (
+              <div className="flex flex-col relative">
+                <div className="absolute left-[5px] top-[12px] h-[calc(100%-12px)] w-[2px] bg-black" />
 
-              {trip.itineraries.map((day) => (
-                <div
-                  className="flex gap-x-4 relative pb-8 last:pb-0"
-                  key={day.day}
-                >
-                  <div className="w-3 h-3 rounded-full bg-black flex-shrink-0 relative z-10 mt-1.5" />
+                {trip.itineraries.map((day) => (
+                  <div
+                    className="flex gap-x-4 relative pb-8 last:pb-0"
+                    key={day.day}
+                  >
+                    <div className="w-3 h-3 rounded-full bg-black flex-shrink-0 relative z-10 mt-1.5" />
 
-                  <div className="flex flex-col gap-y-2">
-                    <div className="flex gap-x-2">
-                      <p className="text-base font-medium">Day {day.day}:</p>
-                      <p className="text-base">{day.location}</p>
+                    <div className="flex flex-col gap-y-2">
+                      <div className="flex gap-x-2">
+                        <p className="text-base font-medium">Day {day.day}:</p>
+                        <p className="text-base">{day.location}</p>
+                      </div>
+
+                      <p className="text-base text-[#898989]">
+                        {day.description}
+                      </p>
                     </div>
-
-                    <p className="text-base text-[#898989]">
-                      {day.description}
-                    </p>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>

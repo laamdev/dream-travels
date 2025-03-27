@@ -33,6 +33,7 @@ interface TripsState {
     hours: number;
     minutes: number;
   } | null;
+  deselectTrip: () => void;
 }
 
 export const useTripsStore = create<TripsState>()(
@@ -56,6 +57,10 @@ export const useTripsStore = create<TripsState>()(
             plannedDate,
           },
         });
+      },
+
+      deselectTrip: () => {
+        set({ selectedTrip: null });
       },
 
       hasSelectedTrip: () => {

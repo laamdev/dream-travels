@@ -21,14 +21,14 @@ export const TripCard = ({ trip }: { trip: Trip }) => {
         className="h-full"
         data-testid={trip.title}
       >
-        <div className="grid grid-cols-2 gap-4 border rounded-xl h-full">
-          <div className="relative h-[300px]">
+        <div className="grid md:grid-cols-2 gap-4 border rounded-xl h-full">
+          <div className="relative h-56 md:h-[300px]">
             {trip.photo_url && (
               <Image
                 src={trip.photo_url}
                 alt={trip.title}
                 fill
-                className="object-cover rounded-l-xl overflow-hidden bg-zinc-100 object-center"
+                className="object-cover md:rounded-tr-none rounded-t-xl md:rounded-l-xl overflow-hidden bg-zinc-100 object-center"
               />
             )}
           </div>

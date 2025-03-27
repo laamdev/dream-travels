@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PlusIcon } from "lucide-react";
 
 import {
   Dialog,
@@ -17,14 +18,17 @@ export const CreateTripDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={buttonVariants({ variant: "outline" })}>
-        Create a new trip
+      <DialogTrigger className={buttonVariants({ variant: "secondary" })}>
+        <span className="hidden md:block">Create a new trip</span>
+        <span className="block md:hidden">
+          <PlusIcon className="size-4" />
+        </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a trip</DialogTitle>
         </DialogHeader>
-        <div className="mt-6">
+        <div className="mt-4">
           <CreateTripForm onSuccess={() => setOpen(false)} />
         </div>
       </DialogContent>

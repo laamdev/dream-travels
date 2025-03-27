@@ -114,7 +114,7 @@
 }
 
 @utility container {
-  @apply px-12 max-w-screen-xl mx-auto;
+  @apply px-4 md:px-12 max-w-screen-xl mx-auto;
 }
 
 @layer base {
