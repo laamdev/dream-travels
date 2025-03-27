@@ -33,12 +33,12 @@ test.describe("Home Page", () => {
     await expect(tabs).toHaveCount(3);
 
     await page.getByRole("tab", { name: "Upcoming" }).click();
-    await expect(page).toHaveURL("http://localhost:3000/?status=todo");
+    await page.waitForURL("http://localhost:3000/?status=todo");
 
     await page.getByRole("tab", { name: "Completed" }).click();
-    await expect(page).toHaveURL("http://localhost:3000/?status=done");
+    await page.waitForURL("http://localhost:3000/?status=done");
 
     await page.getByRole("tab", { name: "All" }).click();
-    await expect(page).toHaveURL("http://localhost:3000/");
+    await page.waitForURL("http://localhost:3000/");
   });
 });

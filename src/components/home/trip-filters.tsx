@@ -20,7 +20,7 @@ export const TripFilters = () => {
       params.set("status", status);
     }
     params.delete("page");
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
