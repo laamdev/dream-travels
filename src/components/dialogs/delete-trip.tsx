@@ -15,14 +15,22 @@ import { Button } from "@/components/ui/button";
 
 import { Trip } from "@/types";
 import { deleteTripAction } from "@/app/_actions";
+import { useTripsStore } from "@/store/useTripsStore";
 
 export const DeleteTripDialog = ({ trip }: { trip: Trip }) => {
   const [isPending, setIsPending] = useState(false);
+  const { selectedTrip, deselectTrip } = useTripsStore();
 
   const handleDelete = async () => {
     try {
       setIsPending(true);
       await deleteTripAction(trip.id);
+
+      // If the deleted trip is the selected trip, deselect it
+      if (selectedTrip?.tripId === trip.id) {
+        deselectTrip();
+      }
+
       toast.success("Trip deleted successfully");
     } catch (error) {
       toast.error("Failed to delete trip");
