@@ -74,7 +74,46 @@ export const TripCountdown = () => {
     router.push("/");
   };
 
-  if (!selectedTrip || !timeLeft || isLoading) return null;
+  if (!selectedTrip || !timeLeft || isLoading)
+    return (
+      <div className="my-8">
+        <div className="border rounded-xl overflow-hidden">
+          <div className="relative h-64 bg-zinc-100 animate-pulse" />
+          <div className="grid grid-cols-1 md:grid-cols-[300px_1fr]">
+            <div className="p-6 bg-zinc-50 border-b md:border-b-0 md:border-r">
+              <div className="flex flex-col gap-4">
+                <div>
+                  <div className="h-4 w-32 bg-zinc-200 rounded mb-2 animate-pulse" />
+                  <div className="h-6 w-48 bg-zinc-200 rounded animate-pulse" />
+                </div>
+                <div className="h-10 bg-zinc-200 rounded animate-pulse" />
+              </div>
+            </div>
+            <div className="px-8 pt-4 pb-8">
+              <div className="flex flex-col gap-y-6">
+                <div className="h-8 w-3/4 bg-zinc-200 rounded animate-pulse" />
+                <div className="h-4 w-full bg-zinc-200 rounded animate-pulse" />
+              </div>
+              <hr className="border-t my-4 border-zinc-200" />
+              <div className="flex flex-col gap-y-6">
+                <div className="h-6 w-24 bg-zinc-200 rounded animate-pulse" />
+                <div className="flex flex-col gap-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex gap-x-4">
+                      <div className="w-3 h-3 rounded-full bg-zinc-200 animate-pulse" />
+                      <div className="flex-1">
+                        <div className="h-4 w-32 bg-zinc-200 rounded mb-2 animate-pulse" />
+                        <div className="h-4 w-full bg-zinc-200 rounded animate-pulse" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   if (error)
     return (
       <div className="p-4 bg-red-50 text-red-600 rounded-xl">
