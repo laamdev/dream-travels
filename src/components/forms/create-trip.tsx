@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { createTripformSchema } from "@/schemas";
+import { createTripformSchema } from "@/validation/form-schemas";
 import { createTripAction } from "@/app/_actions";
 
 interface CreateTripFormProps {

@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,8 +27,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { createTripformSchema } from "@/schemas";
-import { Trip } from "@/types/index";
+import { createTripformSchema } from "@/validation/form-schemas";
+import { Trip } from "@/types";
 import { editTripAction } from "@/app/_actions";
 
 interface EditTripFormProps {
@@ -68,9 +68,9 @@ export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
       const updatedTrip = {
         ...trip,
         title: values.title,
-        introduction: values.introduction,
-        description: values.description,
-        photo_url: values.photo_url,
+        introduction: values.introduction || null,
+        description: values.description || null,
+        photo_url: values.photo_url || null,
         status: values.status,
         itineraries: values.itinerary.map((item, index) => ({
           id: trip.itineraries[index]?.id || "",

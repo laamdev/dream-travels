@@ -8,7 +8,7 @@ import { DeleteTripDialog } from "@/components/dialogs/delete-trip";
 import { TripDetailsDialog } from "@/components/dialogs/trip-details";
 import { EditTripDialog } from "@/components/dialogs/edit-trip";
 
-import { Trip } from "@/types/index";
+import { Trip } from "@/types";
 
 export const TripCard = ({ trip }: { trip: Trip }) => {
   return (

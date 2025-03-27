@@ -7,8 +7,8 @@ import * as z from "zod";
 
 import { db } from "@/lib/db";
 import { trips, itineraries } from "@/lib/db/schema";
-import { Trip } from "@/types/index";
-import { createTripformSchema } from "@/schemas";
+import { Trip } from "@/types";
+import { createTripformSchema } from "@/validation/form-schemas";
 
 export const createTripAction = async (
   data: z.infer<typeof createTripformSchema>

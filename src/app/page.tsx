@@ -1,4 +1,4 @@
-import { Trip } from "@/types/index";
+import { Trip } from "@/types";
 
 import { TripCard } from "@/components/trip-card";
 import { Header } from "@/components/home/header";

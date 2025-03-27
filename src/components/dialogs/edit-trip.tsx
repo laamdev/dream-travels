@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { EditTripForm } from "@/components/forms/edit-trip";
-import { Trip } from "@/types/index";
+import { Trip } from "@/types";
 
 interface EditTripDialogProps {
   trip: Trip;

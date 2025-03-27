@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { Trip } from "@/types/index";
+import { Trip } from "@/types";
 import { deleteTripAction } from "@/app/_actions";
 
 export const DeleteTripDialog = ({ trip }: { trip: Trip }) => {

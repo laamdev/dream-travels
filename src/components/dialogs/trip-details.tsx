@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-import { Trip } from "@/types/index";
+import { Trip } from "@/types";
 
 import {
   Dialog,
