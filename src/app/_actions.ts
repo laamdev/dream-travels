@@ -28,17 +28,24 @@ export const createTripAction = async (
     });
 
     if (data.itinerary && data.itinerary.length > 0) {
-      await db.insert(itineraries).values(
-        data.itinerary.map(
-          (item: { day: number; location: string; description: string }) => ({
-            id: uuidv4(),
-            trip_id: tripId,
-            day: item.day,
-            location: item.location,
-            description: item.description,
-          })
+      const validItineraries = data.itinerary
+        .filter(
+          (
+            item
+          ): item is { day: number; location: string; description: string } =>
+            item.day !== undefined
         )
-      );
+        .map((item) => ({
+          id: uuidv4(),
+          trip_id: tripId,
+          day: item.day,
+          location: item.location,
+          description: item.description,
+        }));
+
+      if (validItineraries.length > 0) {
+        await db.insert(itineraries).values(validItineraries);
+      }
     }
 
     revalidatePath("/");
@@ -90,7 +97,6 @@ export const updateTripStatusAction = async (tripId: string) => {
 
 export const editTripAction = async (trip: Trip) => {
   try {
-    // Update trip details
     await db
       .update(trips)
       .set({
@@ -104,20 +110,32 @@ export const editTripAction = async (trip: Trip) => {
       })
       .where(eq(trips.id, trip.id));
 
-    // Delete existing itineraries
     await db.delete(itineraries).where(eq(itineraries.trip_id, trip.id));
 
-    // Insert new itineraries if they exist
     if (trip.itineraries && trip.itineraries.length > 0) {
-      await db.insert(itineraries).values(
-        trip.itineraries.map((item) => ({
+      const validItineraries = trip.itineraries
+        .filter(
+          (
+            item
+          ): item is {
+            id: string;
+            trip_id: string;
+            day: number;
+            location: string;
+            description: string;
+          } => item.day !== undefined
+        )
+        .map((item) => ({
           id: item.id || uuidv4(),
           trip_id: trip.id,
           day: item.day,
           location: item.location,
           description: item.description,
-        }))
-      );
+        }));
+
+      if (validItineraries.length > 0) {
+        await db.insert(itineraries).values(validItineraries);
+      }
     }
 
     revalidatePath("/");

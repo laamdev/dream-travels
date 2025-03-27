@@ -46,7 +46,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
       description: "",
       photo_url: "",
       status: "todo",
-      itinerary: [{ day: 1, location: "", description: "" }],
+      itinerary: [{ day: undefined, location: "", description: "" }],
     },
   });
 
@@ -160,7 +160,9 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
 
             <button
               type="button"
-              onClick={() => append({ day: 1, location: "", description: "" })}
+              onClick={() =>
+                append({ day: undefined, location: "", description: "" })
+              }
               className="cursor-pointer p-0.5 rounded-full border-2 border-black group hover:text-white hover:bg-black transition-all duration-300 ease-in-out"
             >
               <Plus className="size-4" />
@@ -190,11 +192,10 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
                           onValueChange={(value) =>
                             field.onChange(Number(value))
                           }
-                          defaultValue={String(field.value)}
                         >
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select day" />
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Day" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>

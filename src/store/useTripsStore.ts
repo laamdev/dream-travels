@@ -20,8 +20,8 @@ interface Trip {
 
 interface TripSelection {
   tripId: string;
-  selectedAt: string; // ISO string
-  plannedDate: string; // ISO string
+  selectedAt: string;
+  plannedDate: string;
 }
 
 interface TripsState {
@@ -42,7 +42,7 @@ export const useTripsStore = create<TripsState>()(
       selectedTrip: null,
 
       selectRandomTrip: (trips) => {
-        if (get().selectedTrip) return; // Prevent new selection if trip already chosen
+        if (get().selectedTrip) return;
         if (!trips || trips.length === 0) return;
 
         const randomTrip = trips[Math.floor(Math.random() * trips.length)];

@@ -73,13 +73,20 @@ export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
         description: values.description || null,
         photo_url: values.photo_url || null,
         status: values.status,
-        itineraries: values.itinerary.map((item, index) => ({
-          id: trip.itineraries[index]?.id || "",
-          trip_id: trip.id,
-          day: item.day,
-          location: item.location,
-          description: item.description,
-        })),
+        itineraries: values.itinerary
+          .filter(
+            (
+              item
+            ): item is { day: number; location: string; description: string } =>
+              item.day !== undefined
+          )
+          .map((item, index) => ({
+            id: trip.itineraries[index]?.id || "",
+            trip_id: trip.id,
+            day: item.day,
+            location: item.location,
+            description: item.description,
+          })),
       };
 
       await editTripAction(updatedTrip);
@@ -181,7 +188,9 @@ export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
 
             <button
               type="button"
-              onClick={() => append({ day: 1, location: "", description: "" })}
+              onClick={() =>
+                append({ day: undefined, location: "", description: "" })
+              }
               className="cursor-pointer p-0.5 rounded-full border-2 border-black group hover:text-white hover:bg-black transition-all duration-300 ease-in-out"
             >
               <PlusIcon className="size-4" />
@@ -218,11 +227,11 @@ export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
                             onValueChange={(value) =>
                               field.onChange(Number(value))
                             }
-                            defaultValue={String(field.value)}
+                            value={String(field.value)}
                           >
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select day" />
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Day" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>

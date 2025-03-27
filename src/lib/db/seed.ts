@@ -174,7 +174,6 @@ const tripsData = [
 
 export async function seed() {
   try {
-    // Insert trips
     for (const trip of tripsData) {
       await db.insert(trips).values({
         id: trip.id,

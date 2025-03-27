@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const itineraryItemSchema = z.object({
-  day: z.number(),
+  day: z.number().optional(),
   location: z.string(),
   description: z.string(),
 });

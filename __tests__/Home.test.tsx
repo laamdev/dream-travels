@@ -4,7 +4,6 @@ import { render, screen } from "@testing-library/react";
 import { Header } from "@/components/home/header";
 
 beforeAll(() => {
-  // Ensure we have a DOM environment
   if (typeof window === "undefined") {
     global.window = {} as Window & typeof globalThis;
   }
