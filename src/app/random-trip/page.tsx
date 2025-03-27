@@ -1,4 +1,5 @@
 import React from "react";
+import { Metadata } from "next";
 
 import { TripCountdown } from "@/components/trip-countdown";
 
