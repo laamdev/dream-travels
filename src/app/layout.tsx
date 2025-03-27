@@ -7,10 +7,60 @@ import { cn } from "@/lib/utils";
 
 import { Navbar } from "@/components/navigation/navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Dream Travels",
-  description: "Dream Travels",
+  metadataBase: new URL("https://dream-travels-jade.vercel.app/"),
+  title: {
+    default: SITE.TITLE,
+    template: `%s | ${SITE.TITLE}`,
+  },
+  description: SITE.DESCRIPTION,
+  openGraph: {
+    title: SITE.TITLE,
+    description: SITE.DESCRIPTION,
+    url: SITE.URL,
+    siteName: SITE.TITLE,
+    images: [
+      {
+        url: `${SITE.URL}/images/og.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "es-ES",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: SITE.TITLE,
+    site: SITE.TITLE,
+    card: "summary_large_image",
+    description: SITE.DESCRIPTION,
+    images: [
+      {
+        url: `${SITE.URL}/images/og.png`,
+        alt: `${SITE.TITLE} logo`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/images/apple-icon.png",
+  },
 };
 
 const oakes = localFont({
