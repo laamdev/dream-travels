@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select";
 
 import { createTripformSchema } from "@/schemas";
+import { createTripAction } from "@/app/_actions";
 
 interface CreateTripFormProps {
   onSuccess?: () => void;
@@ -57,18 +58,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
   async function onSubmit(values: z.infer<typeof createTripformSchema>) {
     try {
       setIsPending(true);
-      const response = await fetch("/api/create-trip", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to submit the form");
-      }
+      await createTripAction(values);
 
       form.reset();
       toast.success("Trip created successfully");
@@ -93,7 +83,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name*</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Italy"
@@ -189,7 +179,7 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
                   size="sm"
                   onClick={() => remove(index)}
                 >
-                  <Trash2 className="size-4 text-destructive" />
+                  <Trash2 className="size-4 text-destructives" />
                 </Button>
               </div>
 
@@ -268,8 +258,8 @@ export const CreateTripForm = ({ onSuccess }: CreateTripFormProps) => {
           ))}
         </div>
 
-        <Button type="submit" className="mt-6" disabled={isPending}>
-          {isPending ? "Creating..." : "Submit"}
+        <Button type="submit" className="w-fit" disabled={isPending}>
+          {isPending ? "Saving..." : "Save"}
         </Button>
       </form>
     </Form>

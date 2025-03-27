@@ -25,7 +25,7 @@ const Search = ({
       />
       <button
         onClick={onSearch}
-        className="absolute right-[3px] h-[calc(100%-6px)] px-6 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+        className="absolute right-[3px] h-[calc(100%-6px)] px-6 bg-black text-white hover:text-white/80 rounded-full hover:bg-black/80 transition-colors"
       >
         Search
       </button>

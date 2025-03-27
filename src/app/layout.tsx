@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { Navbar } from "@/components/navigation/navbar";
 import { Toaster } from "@/components/ui/sonner";
-// // import { TripCountdown } from "@/components/TripCountdown";
+// // import { TripCountdown } from "@/components/trip-countdown";
 
 export const metadata: Metadata = {
   title: "Dream Travels",
